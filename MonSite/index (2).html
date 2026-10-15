@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ndéye Rose Bakhoum — Data Analyst</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #0d0d0b;
+      --paper: #f5f2eb;
+      --muted: #5a5650;
+      --accent: #2d5a3d;
+      --accent-light: #e8f0eb;
+      --rule: #ddd8cc;
+      --card: #ffffff;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'DM Sans', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(245, 242, 235, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--rule);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+    .nav-logo { font-family: var(--serif); font-size: 18px; color: var(--ink); letter-spacing: -0.01em; font-weight: 600; }
+    .nav-right { display: flex; align-items: center; gap: 2rem; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 12px; font-weight: 600; color: var(--muted);
+      text-decoration: none; letter-spacing: 0.05em;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .nav-links a.active { border-bottom: 2px solid var(--accent); padding-bottom: 2px; }
+
+    /* Keep section titles visible below the sticky menu when jumping to them */
+    section[id], .availability-timeline { scroll-margin-top: 72px; }
+
+    .lang-switcher {
+      display: flex;
+      border: 1px solid var(--rule);
+      border-radius: 20px;
+      background: var(--card);
+      overflow: hidden;
+    }
+    .lang-btn {
+      border: none;
+      background: transparent;
+      padding: 4px 10px;
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+    .lang-btn.active {
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    /* Language visibility: hide the inactive language, keep each element's natural display */
+    html[lang="fr"] [data-lang="en"] { display: none !important; }
+    html[lang="en"] [data-lang="fr"] { display: none !important; }
+
+    .hero {
+      max-width: 820px; margin: 0 auto;
+      padding: 6rem 2rem 4rem 2.5rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.6rem, 6vw, 4rem);
+      line-height: 1.05; letter-spacing: -0.02em;
+      color: var(--ink); margin-bottom: 1.5rem;
+    }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero-bio {
+      font-size: 16px; color: var(--muted);
+      max-width: 600px; line-height: 1.8; margin-bottom: 2.5rem;
+    }
+    .hero-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 2rem; }
+    .pill {
+      font-size: 12px; font-weight: 500; padding: 6px 14px;
+      border-radius: 100px; border: 1px solid var(--rule);
+      color: var(--muted); background: var(--card);
+    }
+
+    .availability-timeline {
+      background: var(--card);
+      border: 2px solid var(--accent-light);
+      border-radius: 10px;
+      padding: 2.5rem;
+      margin: 3rem auto;
+      max-width: 820px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .timeline-title { font-family: var(--serif); font-size: 1.3rem; color: var(--ink); margin-bottom: 2rem; font-weight: 600; }
+    .timeline-option { margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--rule); }
+    .timeline-option:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+    .option-header { font-weight: 700; color: var(--accent); margin-bottom: 1rem; font-size: 15px; text-transform: uppercase; letter-spacing: 0.03em; }
+    .timeline-detail { font-size: 13.5px; color: var(--muted); line-height: 1.8; margin-left: 0; }
+    .timeline-detail strong { color: var(--ink); font-weight: 600; display: inline-block; margin-right: 0.3em; }
+
+    .container { max-width: 820px; margin: 0 auto; padding: 0 2rem; }
+    section { padding: 4.5rem 0; border-bottom: 1px solid var(--rule); }
+    section:last-child { border-bottom: none; }
+
+    .section-header { display: flex; align-items: baseline; gap: 1.5rem; margin-bottom: 2.5rem; }
+    .section-title { font-family: var(--serif); font-size: 2rem; letter-spacing: -0.02em; color: var(--ink); font-weight: 600; }
+
+    .projects-intro {
+      background: var(--accent-light); padding: 2rem 2rem;
+      border-radius: 10px; margin-bottom: 2rem;
+      border-left: 4px solid var(--accent);
+    }
+    .projects-intro-title { font-family: var(--serif); font-size: 1.3rem; color: var(--ink); margin-bottom: 0.8rem; }
+    .projects-intro-desc { font-size: 15px; color: var(--muted); line-height: 1.75; }
+
+    .project-filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .filter-btn {
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 100px;
+      border: 1px solid var(--rule);
+      background: var(--card);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .filter-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .filter-btn.active {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+    }
+
+    .projects-grid {
+      display: flex; flex-direction: column;
+      gap: 1.5px; border: 1px solid var(--rule);
+      border-radius: 10px; overflow: hidden; background: var(--rule);
+    }
+    .project-card { background: var(--card); padding: 2rem; transition: all 0.15s; }
+    .project-card:hover { background: #fafaf8; }
+    .project-top {
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 1.5rem; margin-bottom: 1rem;
+    }
+    .project-name { font-family: var(--serif); font-size: 1.25rem; color: var(--ink); line-height: 1.3; font-weight: 600; }
+    .project-lang {
+      font-size: 11px; font-weight: 600; padding: 5px 11px;
+      border-radius: 4px; background: var(--accent-light);
+      color: var(--accent); white-space: nowrap; flex-shrink: 0; text-transform: uppercase; letter-spacing: 0.03em;
+    }
+    .project-year { font-size: 12px; color: var(--muted); margin-bottom: 0.8rem; }
+    .project-desc { font-size: 14.5px; color: var(--muted); line-height: 1.75; margin-bottom: 1.2rem; }
+    .project-details {
+      background: #fafaf8; padding: 1.25rem; border-radius: 6px;
+      margin-bottom: 1.2rem; border-left: 3px solid var(--accent-light);
+      font-size: 13.5px; color: var(--muted); line-height: 1.7;
+    }
+    .project-details strong { color: var(--ink); font-weight: 600; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .tag { font-size: 11px; padding: 4px 10px; border-radius: 4px; border: 1px solid var(--rule); color: var(--muted); font-weight: 500; }
+    .tag-complete { font-size: 11px; padding: 4px 10px; border-radius: 4px; background: #e6f7f0; color: #0d5a47; border: 1px solid #99d9c8; font-weight: 500; }
+    .tag-upcoming { font-size: 11px; padding: 4px 10px; border-radius: 4px; background: #eef2ff; color: #3730a3; border: 1px solid #c7d2fe; font-weight: 500; }
+    .project-links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 1rem; }
+    .project-link {
+      font-size: 12px; padding: 6px 12px; border-radius: 4px;
+      background: var(--accent-light); color: var(--accent);
+      text-decoration: none; font-weight: 600;
+      transition: all 0.2s;
+    }
+    .project-link:hover { background: var(--accent); color: #fff; }
+
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+    .skill-card { background: var(--card); border: 1px solid var(--rule); border-radius: 8px; padding: 1.25rem; border-top: 3px solid var(--accent); }
+    .skill-name { font-size: 14px; font-weight: 600; color: var(--ink); display: block; margin-bottom: 4px; }
+    .skill-level { font-size: 11px; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; }
+
+    .method-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1.5rem; }
+
+    .domain-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-top: 1.5rem; }
+    .domain-card { background: var(--card); border: 1px solid var(--rule); border-radius: 8px; padding: 1.25rem; }
+    .domain-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 6px; }
+    .domain-desc { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+
+    .edu-list { display: flex; flex-direction: column; }
+    .edu-item {
+      display: grid; grid-template-columns: 120px 1fr;
+      gap: 1.75rem; padding: 1.5rem 0;
+      border-bottom: 1px solid var(--rule); align-items: start;
+    }
+    .edu-item:last-child { border-bottom: none; }
+    .edu-year { font-size: 12px; color: var(--muted); padding-top: 3px; font-variant-numeric: tabular-nums; font-weight: 600; }
+    .edu-degree { font-family: var(--serif); font-size: 1.1rem; color: var(--ink); line-height: 1.3; margin-bottom: 3px; font-weight: 600; }
+    .edu-inst { font-size: 13.5px; color: var(--muted); font-weight: 500; }
+    .edu-detail { font-size: 13px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
+
+    .exp-list { display: flex; flex-direction: column; }
+    .exp-item { display: grid; grid-template-columns: 120px 1fr; gap: 1.75rem; padding: 1.5rem 0; border-bottom: 1px solid var(--rule); }
+    .exp-item:last-child { border-bottom: none; }
+    .exp-dates { font-size: 12px; color: var(--muted); padding-top: 3px; font-weight: 600; }
+    .exp-role { font-family: var(--serif); font-size: 1.1rem; color: var(--ink); margin-bottom: 3px; font-weight: 600; }
+    .exp-org { font-size: 13.5px; color: var(--muted); margin-bottom: 8px; font-weight: 500; }
+    .exp-desc { font-size: 13.5px; color: var(--muted); line-height: 1.7; }
+    .exp-bullets { font-size: 13.5px; color: var(--muted); line-height: 1.7; padding-left: 1.1rem; }
+    .exp-bullets li { margin-bottom: 4px; }
+
+    .lang-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .lang-card {
+      background: var(--card); border: 1px solid var(--rule);
+      border-radius: 8px; padding: 1rem 1.5rem;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .lang-flag { font-size: 1.5rem; display: flex; align-items: center; }
+    .lang-flag svg { display: block; height: 20px; width: auto; border-radius: 3px; box-shadow: 0 0 0 1px var(--rule); }
+    .lang-name { font-size: 14px; font-weight: 600; color: var(--ink); }
+    .lang-level-text { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    .contact-intro { font-size: 15.5px; color: var(--muted); margin-bottom: 2rem; line-height: 1.8; }
+    .contact-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+    .contact-item {
+      display: flex; gap: 14px; padding: 1.25rem;
+      background: var(--card); border: 1px solid var(--rule);
+      border-radius: 8px; text-decoration: none;
+      transition: all 0.2s;
+    }
+    .contact-item:hover { border-color: var(--accent); background: #fafaf8; }
+    .contact-icon {
+      font-size: 1.5rem; width: 38px; height: 38px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent); flex-shrink: 0;
+    }
+    .contact-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 4px; }
+    .contact-value { font-size: 14px; color: var(--ink); font-weight: 600; word-break: break-word; }
+
+    footer {
+      background: var(--paper); border-top: 1px solid var(--rule);
+      padding: 2.5rem; text-align: center;
+      font-size: 12px; color: var(--muted); letter-spacing: 0.05em;
+    }
+    .footer-phones { margin-top: 0.6rem; }
+    .footer-phones a { color: var(--accent); text-decoration: none; font-weight: 600; }
+    .footer-phones a:hover { text-decoration: underline; }
+
+    .fade-in { opacity: 0; transform: translateY(20px); animation: fadeInUp 0.6s ease-out forwards; }
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 700px) {
+      nav { padding: 0.5rem 1rem 0; height: auto; flex-wrap: wrap; row-gap: 0.4rem; }
+      .nav-right { display: contents; }
+      .nav-logo { order: 1; font-size: 16px; }
+      .lang-switcher { order: 2; }
+      .nav-links {
+        order: 3; width: 100%; gap: 1.25rem;
+        overflow-x: auto; white-space: nowrap;
+        padding: 0.4rem 0 0.6rem;
+        scrollbar-width: none;
+      }
+      .nav-links::-webkit-scrollbar { display: none; }
+      .nav-links a { font-size: 11px; }
+      section[id], .availability-timeline { scroll-margin-top: 100px; }
+      .hero { padding: 3.5rem 1.5rem 2.5rem; }
+      .container { padding: 0 1rem; }
+      .availability-timeline { padding: 1.5rem; }
+      .section-header { flex-direction: column; gap: 0.5rem; }
+      .section-title { font-size: 1.6rem; }
+      .edu-item, .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .edu-year, .exp-dates { font-size: 11px; }
+      .project-top { flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">Ndéye Rose Bakhoum</div>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#projets"><span data-lang="fr">Projets</span><span data-lang="en">Projects</span></a></li>
+        <li><a href="#competences"><span data-lang="fr">Compétences</span><span data-lang="en">Skills</span></a></li>
+        <li><a href="#formation"><span data-lang="fr">Formation</span><span data-lang="en">Education</span></a></li>
+        <li><a href="#experience"><span data-lang="fr">Expérience</span><span data-lang="en">Experience</span></a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="lang-switcher">
+        <button class="lang-btn active" id="btn-fr" onclick="setLanguage('fr')">FR</button>
+        <button class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- HERO -->
+    <section class="hero fade-in">
+      <div data-lang="fr" class="hero-eyebrow">Data Analyst &amp; Économiste de la Santé</div>
+      <div data-lang="en" class="hero-eyebrow">Data Analyst &amp; Health Economist</div>
+
+      <h1>
+        <span data-lang="fr">Données, prévision &amp; <em>aide à la décision publique</em></span>
+        <span data-lang="en">Data, forecasting &amp; <em>public decision support</em></span>
+      </h1>
+
+      <p class="hero-bio" data-lang="fr">
+        Économiste quantitative, diplômée d'un Master en Économétrie appliquée (Université de Nantes) et en formation en Économie de la santé à l'Université du Mans. Passionnée par la modélisation et l'analyse prospective au service des politiques publiques : extraction et fiabilisation de données, modèles prédictifs, séries temporelles, machine learning et évaluation médico-économique. Expérience en production d'indicateurs et en prévision économétrique à la Direction Générale de France Travail. Recherche un stage (alterné ou temps plein) dans la protection sociale, l'assurance santé, les autorités de santé ou l'industrie pharmaceutique, en appui à la prévision, à la gestion du risque financier et à l'aide à la décision.
+      </p>
+      <p class="hero-bio" data-lang="en">
+        Quantitative economist with a Master's in Applied Econometrics (University of Nantes), currently training in Health Economics at Le Mans University. Passionate about modelling and forward-looking analysis for public policy: data extraction and quality assurance, predictive models, time series, machine learning and health economic evaluation. Experience producing indicators and econometric forecasts at the Head Office of France Travail (French public employment service). Seeking an internship (alternating or full-time) in social protection, health insurance, health authorities or the pharmaceutical industry, supporting forecasting, financial risk management and decision-making.
+      </p>
+
+      <div class="hero-pills">
+        <span class="pill" data-lang="fr">Rigueur &amp; fiabilité des données</span>
+        <span class="pill" data-lang="en">Rigor &amp; data reliability</span>
+        <span class="pill" data-lang="fr">Esprit d'analyse &amp; de synthèse</span>
+        <span class="pill" data-lang="en">Analytical &amp; synthesis skills</span>
+        <span class="pill" data-lang="fr">Restitution aux équipes métier</span>
+        <span class="pill" data-lang="en">Presenting results to business teams</span>
+        <span class="pill" data-lang="fr">Travail collaboratif</span>
+        <span class="pill" data-lang="en">Collaborative teamwork</span>
+        <span class="pill" data-lang="fr">Autonomie</span>
+        <span class="pill" data-lang="en">Autonomy</span>
+      </div>
+    </section>
+
+    <!-- AVAILABILITY TIMELINE -->
+    <div class="availability-timeline" id="disponibilite">
+      <div class="timeline-title" data-lang="fr">📅 Disponibilité &amp; Calendrier de Stage M2</div>
+      <div class="timeline-title" data-lang="en">📅 Availability &amp; Internship Schedule</div>
+
+      <div class="timeline-option">
+        <div class="option-header" data-lang="fr">Option 1 : Stage Alterné (mi-octobre 2026 – juillet 2027)</div>
+        <div class="option-header" data-lang="en">Option 1: Alternating Internship (Mid-October 2026 – July 2027)</div>
+        <div class="timeline-detail" data-lang="fr">
+          <strong>Mi-octobre – avril :</strong> Stage alterné – 2 semaines en entreprise + 2 semaines en formation<br>
+          <strong>Mai – juillet :</strong> Temps plein en entreprise
+        </div>
+        <div class="timeline-detail" data-lang="en">
+          <strong>Mid-October – April:</strong> Alternating – 2 weeks in company + 2 weeks coursework<br>
+          <strong>May – July:</strong> Full-time in company
+        </div>
+      </div>
+
+      <div class="timeline-option">
+        <div class="option-header" data-lang="fr">Option 2 : Stage Alterné (janvier – août 2027)</div>
+        <div class="option-header" data-lang="en">Option 2: Alternating Internship (January – August 2027)</div>
+        <div class="timeline-detail" data-lang="fr">
+          <strong>Janvier – avril :</strong> Stage alterné – 2 semaines en entreprise + 2 semaines en formation<br>
+          <strong>Mai – août :</strong> Temps plein en entreprise
+        </div>
+        <div class="timeline-detail" data-lang="en">
+          <strong>January – April:</strong> Alternating – 2 weeks in company + 2 weeks coursework<br>
+          <strong>May – August:</strong> Full-time in company
+        </div>
+      </div>
+
+      <div class="timeline-option">
+        <div class="option-header" data-lang="fr">Option 3 : Stage Temps Plein (avril – septembre 2027)</div>
+        <div class="option-header" data-lang="en">Option 3: Full-time Internship (April – September 2027)</div>
+        <div class="timeline-detail" data-lang="fr">
+          <strong>Type :</strong> Stage de fin d'études<br>
+          <strong>Format :</strong> Temps plein en entreprise
+        </div>
+        <div class="timeline-detail" data-lang="en">
+          <strong>Type:</strong> Final internship<br>
+          <strong>Format:</strong> Full-time in company
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJETS -->
+    <section id="projets">
+      <div class="projects-intro">
+        <div class="projects-intro-title" data-lang="fr">Projets &amp; Travaux Quantitatifs</div>
+        <div class="projects-intro-title" data-lang="en">Projects &amp; Quantitative Work</div>
+        <div class="projects-intro-desc" data-lang="fr">
+          Travaux appliqués et études en cours combinant économétrie de la santé, modélisation bayésienne, évaluation médico-économique et analyse de données de santé. Ce corpus regroupe des projets académiques du Master Économie de la santé (M1 &amp; M2).
+        </div>
+        <div class="projects-intro-desc" data-lang="en">
+          Applied work and ongoing studies combining health econometrics, Bayesian modelling, health economic evaluation and health data analysis. This includes academic projects from the Master's in Health Economics (M1 &amp; M2).
+        </div>
+      </div>
+
+      <!-- FILTER BUTTONS -->
+      <div class="project-filters">
+        <button class="filter-btn active" data-filter="all" onclick="filterProjects('all')" data-lang="fr">Tous les projets (6)</button>
+        <button class="filter-btn active" data-filter="all" onclick="filterProjects('all')" data-lang="en">All projects (6)</button>
+        <button class="filter-btn" data-filter="heor" onclick="filterProjects('heor')" data-lang="fr">Modélisation &amp; HTA (3)</button>
+        <button class="filter-btn" data-filter="heor" onclick="filterProjects('heor')" data-lang="en">Modelling &amp; HTA (3)</button>
+        <button class="filter-btn" data-filter="policy" onclick="filterProjects('policy')" data-lang="fr">Économétrie &amp; Politiques (2)</button>
+        <button class="filter-btn" data-filter="policy" onclick="filterProjects('policy')" data-lang="en">Econometrics &amp; Policy (2)</button>
+        <button class="filter-btn" data-filter="ml" onclick="filterProjects('ml')" data-lang="fr">Data Mining &amp; Machine Learning (1)</button>
+        <button class="filter-btn" data-filter="ml" onclick="filterProjects('ml')" data-lang="en">Data Mining &amp; Machine Learning (1)</button>
+      </div>
+
+      <div class="projects-grid">
+
+        <!-- MONTE CARLO -->
+        <div class="project-card" data-category="heor">
+          <div class="project-top">
+            <div>
+              <div class="project-name" data-lang="fr">Quantification de l'Incertitude : Monte Carlo &amp; Bootstrap</div>
+              <div class="project-name" data-lang="en">Uncertainty Quantification: Monte Carlo &amp; Bootstrap</div>
+              <div class="project-year" data-lang="fr">Projet M2S1, 2026</div>
+              <div class="project-year" data-lang="en">Project M2S1, 2026</div>
+            </div>
+            <span class="project-lang">R • PSA</span>
+          </div>
+          <p class="project-desc" data-lang="fr">Analyse de sensibilité probabiliste approfondie sur la prise en charge post-SCA, confrontant approches paramétriques et non paramétriques sur 5 000 réplications.</p>
+          <p class="project-desc" data-lang="en">In-depth probabilistic sensitivity analysis on post-ACS management, comparing parametric and non-parametric approaches across 5,000 replications.</p>
+          <div class="project-details" data-lang="fr">
+            <strong>Méthodes :</strong> PSA paramétrique (Beta, Gamma, Log-normale) et bootstrap non paramétrique ré-échantillonnant les trajectoires. Plans coût-efficacité, courbes d'acceptabilité (CEAC) et EVPI.
+          </div>
+          <div class="project-details" data-lang="en">
+            <strong>Methods:</strong> Parametric PSA (Beta, Gamma, Log-normal) and non-parametric bootstrap resampling trajectories. Cost-effectiveness planes, acceptability curves (CEAC) and EVPI.
+          </div>
+          <div class="project-tags">
+            <span class="tag-upcoming" data-lang="fr">⏳ En cours</span>
+            <span class="tag-upcoming" data-lang="en">⏳ Ongoing</span>
+            <span class="tag">Monte Carlo</span>
+            <span class="tag">CEAC</span>
+          </div>
+        </div>
+
+        <!-- BIA -->
+        <div class="project-card" data-category="heor">
+          <div class="project-top">
+            <div>
+              <div class="project-name" data-lang="fr">Protocole BIA : Évaluation Ex Ante de l'Impact Budgétaire</div>
+              <div class="project-name" data-lang="en">BIA Protocol: Ex Ante Budget Impact Assessment</div>
+              <div class="project-year" data-lang="fr">Projet M2S1, 2026</div>
+              <div class="project-year" data-lang="en">Project M2S1, 2026</div>
+            </div>
+            <span class="project-lang">AIB • HAS</span>
+          </div>
+          <p class="project-desc" data-lang="fr">Rédaction d'un protocole d'analyse d'impact budgétaire selon les exigences méthodologiques de la HAS pour l'introduction d'une technologie diagnostique innovante.</p>
+          <p class="project-desc" data-lang="en">Writing a budget impact analysis protocol meeting HAS methodological requirements for introducing an innovative diagnostic technology.</p>
+          <div class="project-details" data-lang="fr">
+            <strong>Cadrage :</strong> Perspective Assurance maladie, dimensionnement population cible, modélisation parts de marché et taux de pénétration sur 3-5 ans, calcul coûts différentiels.
+          </div>
+          <div class="project-details" data-lang="en">
+            <strong>Scope:</strong> Health insurance perspective, target population sizing, market share and penetration rate modelling over 3-5 years, incremental cost calculation.
+          </div>
+          <div class="project-tags">
+            <span class="tag-upcoming" data-lang="fr">⏳ En cours</span>
+            <span class="tag-upcoming" data-lang="en">⏳ Ongoing</span>
+            <span class="tag" data-lang="fr">Impact Budgétaire</span>
+            <span class="tag" data-lang="en">Budget Impact</span>
+            <span class="tag">HAS</span>
+          </div>
+        </div>
+
+        <!-- NMA -->
+        <div class="project-card" data-category="heor">
+          <div class="project-top">
+            <div>
+              <div class="project-name" data-lang="fr">Méta-Analyse en Réseau : Traitement de l'Ulcère Veineux</div>
+              <div class="project-name" data-lang="en">Network Meta-Analysis: Venous Ulcer Treatment</div>
+              <div class="project-year" data-lang="fr">Projet M1, 2026</div>
+              <div class="project-year" data-lang="en">Project M1, 2026</div>
+            </div>
+            <span class="project-lang">R • WinBUGS</span>
+          </div>
+          <p class="project-desc" data-lang="fr">Synthèse bayésienne hiérarchique en réseau de 15 essais cliniques randomisés comparant 6 stratégies thérapeutiques. Modèles à effets aléatoires via MCMC.</p>
+          <p class="project-desc" data-lang="en">Hierarchical Bayesian network synthesis of 15 RCTs comparing 6 treatment strategies. Random-effects models via MCMC.</p>
+          <div class="project-details" data-lang="fr">
+            <strong>Résultats :</strong> Thérapie laser : SUCRA 75%, OR = 2,45 [ICr 95% : 1,15 ; 5,20]. Convergence MCMC évaluée, hétérogénéité (I² = 46%).
+          </div>
+          <div class="project-details" data-lang="en">
+            <strong>Results:</strong> Laser therapy: SUCRA 75%, OR = 2.45 [95% CrI: 1.15; 5.20]. MCMC convergence assessed, heterogeneity (I² = 46%).
+          </div>
+          <div class="project-tags">
+            <span class="tag-complete" data-lang="fr">✓ Complet</span>
+            <span class="tag-complete" data-lang="en">✓ Complete</span>
+            <span class="tag">Bayesian</span>
+            <span class="tag">NMA</span>
+          </div>
+          <div class="project-links">
+            <a href="BAKHOUM_WILLIAMS_Projet_Meta_Rapport.pdf" class="project-link" data-lang="fr">Rapport PDF</a>
+            <a href="BAKHOUM_WILLIAMS_Projet_Meta_Rapport.pdf" class="project-link" data-lang="en">PDF Report</a>
+          </div>
+        </div>
+
+        <!-- OECD -->
+        <div class="project-card" data-category="policy">
+          <div class="project-top">
+            <div>
+              <div class="project-name" data-lang="fr">Déterminants Espérance de Vie OCDE</div>
+              <div class="project-name" data-lang="en">Life Expectancy Determinants in the OECD</div>
+              <div class="project-year" data-lang="fr">Projet M1, 2026</div>
+              <div class="project-year" data-lang="en">Project M1, 2026</div>
+            </div>
+            <span class="project-lang">Python • R</span>
+          </div>
+          <p class="project-desc" data-lang="fr">Analyse exploratoire et modélisation économétrique des déterminants sanitaires, économiques et environnementaux sur 38 pays OCDE.</p>
+          <p class="project-desc" data-lang="en">Exploratory analysis and econometric modelling of health, economic and environmental determinants across 38 OECD countries.</p>
+          <div class="project-details" data-lang="fr">
+            <strong>Méthodes :</strong> ACP, clustering non supervisé, régression multiple (R² = 0,43). Dépenses santé en % PIB : prédicteur majeur (p &lt;0,01).
+          </div>
+          <div class="project-details" data-lang="en">
+            <strong>Methods:</strong> PCA, unsupervised clustering, multiple regression (R² = 0.43). Health spending as % GDP: major predictor (p &lt;0.01).
+          </div>
+          <div class="project-tags">
+            <span class="tag-complete" data-lang="fr">✓ Complet</span>
+            <span class="tag-complete" data-lang="en">✓ Complete</span>
+            <span class="tag">Econometrics</span>
+            <span class="tag">PCA</span>
+          </div>
+          <div class="project-links">
+            <a href="BAKHOUM_WILLIAMS_Projet_Visualisation_M1SANTE.pdf" class="project-link" data-lang="fr">Rapport PDF</a>
+            <a href="BAKHOUM_WILLIAMS_Projet_Visualisation_M1SANTE.pdf" class="project-link" data-lang="en">PDF Report</a>
+          </div>
+        </div>
+
+        <!-- DATA MINING : SURVIE CANCER -->
+        <div class="project-card" data-category="ml">
+          <div class="project-top">
+            <div>
+              <div class="project-name" data-lang="fr">Prédiction de la Survie Nette au Cancer dans l'OCDE : Arbre de Décision</div>
+              <div class="project-name" data-lang="en">Predicting Cancer Net Survival in the OECD: Decision Tree Approach</div>
+              <div class="project-year" data-lang="fr">Projet M1 Data Mining, 2026</div>
+              <div class="project-year" data-lang="en">M1 Data Mining Project, 2026</div>
+            </div>
+            <span class="project-lang">R • CART</span>
+          </div>
+          <p class="project-desc" data-lang="fr">Classification supervisée de la survie nette à 5 ans standardisée sur l'âge (données CONCORD, base OCDE « Healthcare Quality and Outcomes ») : 1 455 observations, 46 pays, 7 cancers, 2004–2014. Survie discrétisée en trois classes (faible &lt;40 %, moyenne, élevée &gt;70 %) selon la démarche KDD.</p>
+          <p class="project-desc" data-lang="en">Supervised classification of age-standardised 5-year net cancer survival (CONCORD data, OECD "Healthcare Quality and Outcomes" database): 1,455 observations, 46 countries, 7 cancers, 2004–2014. Survival discretised into three classes (low &lt;40%, medium, high &gt;70%) following the KDD process.</p>
+          <div class="project-details" data-lang="fr">
+            <strong>Méthodes &amp; résultats :</strong> Échantillon stratifié 70/30, validation croisée à 5 plis (cp = 0,0096). Arbre CART : accuracy 91,7 %, Kappa 0,87, écart entraînement/test de 1,6 point (pas de sur-apprentissage). Performances identiques à la forêt aléatoire et à la régression logistique multinomiale : le type de cancer est le facteur prédictif dominant.
+          </div>
+          <div class="project-details" data-lang="en">
+            <strong>Methods &amp; results:</strong> Stratified 70/30 split, 5-fold cross-validation (cp = 0.0096). CART tree: 91.7% accuracy, Kappa 0.87, 1.6-point train/test gap (no overfitting). Same performance as random forest and multinomial logistic regression: cancer type is the dominant predictor.
+          </div>
+          <div class="project-tags">
+            <span class="tag-complete" data-lang="fr">✓ Complet</span>
+            <span class="tag-complete" data-lang="en">✓ Complete</span>
+            <span class="tag">Data Mining</span>
+            <span class="tag">Random Forest</span>
+            <span class="tag" data-lang="fr">Classification</span>
+            <span class="tag" data-lang="en">Classification</span>
+          </div>
+          <div class="project-links">
+            <a href="BAKHOUM_WILLIAMS_Projet_data_mining_rapport.pdf" class="project-link" data-lang="fr">Rapport PDF</a>
+            <a href="BAKHOUM_WILLIAMS_Projet_data_mining_rapport.pdf" class="project-link" data-lang="en">PDF Report</a>
+          </div>
+        </div>
+
+        <!-- DESERTS MEDICAUX -->
+        <div class="project-card" data-category="policy">
+          <div class="project-top">
+            <div>
+              <div class="project-name" data-lang="fr">Inégalités Territoriales d'Accès aux Médecins Généralistes</div>
+              <div class="project-name" data-lang="en">Territorial Inequalities in Access to General Practitioners</div>
+              <div class="project-year" data-lang="fr">Projet M1 Panorama des données de santé, 2026</div>
+              <div class="project-year" data-lang="en">M1 Health Data Overview Project, 2026</div>
+            </div>
+            <span class="project-lang">R • Cartographie</span>
+          </div>
+          <p class="project-desc" data-lang="fr">Analyse des « déserts médicaux » en France métropolitaine : cartographie de la densité de médecins généralistes par département (2021) et lien avec les caractéristiques socio-économiques des territoires.</p>
+          <p class="project-desc" data-lang="en">Analysis of "medical deserts" in mainland France: mapping general practitioner density by département (2021) and its link with the socio-economic characteristics of each territory.</p>
+          <div class="project-details" data-lang="fr">
+            <strong>Données &amp; méthodes :</strong> Open data DREES (densité de médecins) et INSEE (niveau de vie médian, part des plus de 60 ans, densité de population). Régression linéaire multiple. Densité de 91 à 268 médecins pour 100 000 habitants ; densité de population et part des seniors positivement et significativement associées.
+          </div>
+          <div class="project-details" data-lang="en">
+            <strong>Data &amp; methods:</strong> DREES open data (GP density) and INSEE (median standard of living, share of over-60s, population density). Multiple linear regression. Density ranges from 91 to 268 GPs per 100,000 inhabitants; population density and share of seniors are positively and significantly associated.
+          </div>
+          <div class="project-tags">
+            <span class="tag-complete" data-lang="fr">✓ Complet</span>
+            <span class="tag-complete" data-lang="en">✓ Complete</span>
+            <span class="tag">DREES</span>
+            <span class="tag">INSEE</span>
+            <span class="tag" data-lang="fr">Accès aux soins</span>
+            <span class="tag" data-lang="en">Access to care</span>
+          </div>
+          <div class="project-links">
+            <a href="BAKHOUM_WILLIAMS_Rapport.pdf" class="project-link" data-lang="fr">Rapport PDF</a>
+            <a href="BAKHOUM_WILLIAMS_Rapport.pdf" class="project-link" data-lang="en">PDF Report</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- COMPETENCES -->
+    <section id="competences" class="fade-in">
+      <div class="section-header">
+        <h2 class="section-title" data-lang="fr">Compétences Techniques</h2>
+        <h2 class="section-title" data-lang="en">Technical Skills</h2>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <span class="skill-name">R / RStudio</span>
+          <span class="skill-level" data-lang="fr">Langage</span>
+          <span class="skill-level" data-lang="en">Language</span>
+        </div>
+        <div class="skill-card">
+          <span class="skill-name">Python (Pandas, NumPy)</span>
+          <span class="skill-level" data-lang="fr">Langage</span>
+          <span class="skill-level" data-lang="en">Language</span>
+        </div>
+        <div class="skill-card">
+          <span class="skill-name">SAS</span>
+          <span class="skill-level" data-lang="fr">Langage</span>
+          <span class="skill-level" data-lang="en">Language</span>
+        </div>
+        <div class="skill-card">
+          <span class="skill-name">Stata</span>
+          <span class="skill-level" data-lang="fr">Logiciel statistique</span>
+          <span class="skill-level" data-lang="en">Statistical software</span>
+        </div>
+        <div class="skill-card">
+          <span class="skill-name">SQL</span>
+          <span class="skill-level" data-lang="fr">Langage</span>
+          <span class="skill-level" data-lang="en">Language</span>
+        </div>
+        <div class="skill-card">
+          <span class="skill-name">VBA</span>
+          <span class="skill-level" data-lang="fr">Langage</span>
+          <span class="skill-level" data-lang="en">Language</span>
+        </div>
+        <div class="skill-card">
+          <span class="skill-name">Power BI</span>
+          <span class="skill-level">Visualisation</span>
+        </div>
+        <div class="skill-card">
+          <span class="skill-name">SAS Viya</span>
+          <span class="skill-level">Visualisation</span>
+        </div>
+        <div class="skill-card">
+          <span class="skill-name">Orange Data Mining</span>
+          <span class="skill-level">Data mining</span>
+        </div>
+        <div class="skill-card">
+          <span class="skill-name">R Shiny</span>
+          <span class="skill-level" data-lang="fr">Tableaux de bord interactifs</span>
+          <span class="skill-level" data-lang="en">Interactive dashboards</span>
+        </div>
+        <div class="skill-card">
+          <span class="skill-name">GeoDa</span>
+          <span class="skill-level" data-lang="fr">Économétrie spatiale</span>
+          <span class="skill-level" data-lang="en">Spatial econometrics</span>
+        </div>
+        <div class="skill-card">
+          <span class="skill-name">Excel · Word · PowerPoint</span>
+          <span class="skill-level" data-lang="fr">Bureautique</span>
+          <span class="skill-level" data-lang="en">Office tools</span>
+        </div>
+      </div>
+
+      <div class="method-list">
+        <span class="tag" data-lang="fr">Extraction de données (ETL)</span>
+        <span class="tag" data-lang="en">Data extraction (ETL)</span>
+        <span class="tag" data-lang="fr">Nettoyage de données</span>
+        <span class="tag" data-lang="en">Data cleaning</span>
+        <span class="tag" data-lang="fr">Structuration des données</span>
+        <span class="tag" data-lang="en">Data structuring</span>
+        <span class="tag" data-lang="fr">Modélisation statistique</span>
+        <span class="tag" data-lang="en">Statistical modelling</span>
+        <span class="tag" data-lang="fr">Modèles prédictifs</span>
+        <span class="tag" data-lang="en">Predictive models</span>
+        <span class="tag" data-lang="fr">Économétrie</span>
+        <span class="tag" data-lang="en">Econometrics</span>
+        <span class="tag" data-lang="fr">Séries temporelles</span>
+        <span class="tag" data-lang="en">Time series</span>
+        <span class="tag">Machine Learning</span>
+        <span class="tag">Data mining</span>
+        <span class="tag" data-lang="fr">RGPD</span>
+        <span class="tag" data-lang="en">GDPR</span>
+        <span class="tag">PMSI</span>
+      </div>
+
+      <h3 style="font-family: var(--serif); font-size: 1.4rem; margin-top: 3rem; margin-bottom: 1.5rem; color: var(--ink); font-weight: 600;">
+        <span data-lang="fr">Domaines d'Application</span>
+        <span data-lang="en">Application Domains</span>
+      </h3>
+      <div class="domain-grid">
+        <div class="domain-card">
+          <div class="domain-label" data-lang="fr">Prévision &amp; Économétrie Appliquée</div>
+          <div class="domain-label" data-lang="en">Forecasting &amp; Applied Econometrics</div>
+          <div class="domain-desc" data-lang="fr">Modèles de prévision, séries temporelles, sélection de variables, validation croisée, données de panel</div>
+          <div class="domain-desc" data-lang="en">Forecasting models, time series, variable selection, cross-validation, panel data</div>
+        </div>
+        <div class="domain-card">
+          <div class="domain-label" data-lang="fr">Protection Sociale &amp; Politiques Publiques</div>
+          <div class="domain-label" data-lang="en">Social Protection &amp; Public Policy</div>
+          <div class="domain-desc" data-lang="fr">Indicateurs de suivi, analyse des droits et prestations, évaluation des politiques publiques, financement des systèmes de santé</div>
+          <div class="domain-desc" data-lang="en">Monitoring indicators, analysis of entitlements and benefits, public policy evaluation, health system financing</div>
+        </div>
+        <div class="domain-card">
+          <div class="domain-label" data-lang="fr">Évaluation Médico-Économique</div>
+          <div class="domain-label" data-lang="en">Health Economic Evaluation</div>
+          <div class="domain-desc" data-lang="fr">Analyse coût-efficacité (CEA), coût-utilité (CUA), analyse d'impact budgétaire, modèles décisionnels</div>
+          <div class="domain-desc" data-lang="en">Cost-effectiveness analysis (CEA), cost-utility (CUA), budget impact analysis, decision models</div>
+        </div>
+        <div class="domain-card">
+          <div class="domain-label" data-lang="fr">Modélisation &amp; Inférence</div>
+          <div class="domain-label" data-lang="en">Modelling &amp; Inference</div>
+          <div class="domain-desc" data-lang="fr">Modèles de Markov, NMA bayésienne, méthodes de Monte Carlo, score de propension</div>
+          <div class="domain-desc" data-lang="en">Markov models, Bayesian NMA, Monte Carlo methods, propensity scores</div>
+        </div>
+        <div class="domain-card">
+          <div class="domain-label" data-lang="fr">Data Science &amp; Tableaux de Bord</div>
+          <div class="domain-label" data-lang="en">Data Science &amp; Dashboards</div>
+          <div class="domain-desc" data-lang="fr">Machine learning, data mining, fiabilisation de bases de données, tableaux de bord Power BI et SAS Viya</div>
+          <div class="domain-desc" data-lang="en">Machine learning, data mining, database quality assurance, Power BI and SAS Viya dashboards</div>
+        </div>
+        <div class="domain-card">
+          <div class="domain-label" data-lang="fr">Données de Santé &amp; Conformité</div>
+          <div class="domain-label" data-lang="en">Health Data &amp; Compliance</div>
+          <div class="domain-desc" data-lang="fr">PMSI, données type SNDS, conformité RGPD, gestion de bases de données relationnelles (SQL)</div>
+          <div class="domain-desc" data-lang="en">PMSI hospital data, SNDS-type data, GDPR compliance, relational database management (SQL)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FORMATION -->
+    <section id="formation" class="fade-in">
+      <div class="section-header">
+        <h2 class="section-title" data-lang="fr">Formation</h2>
+        <h2 class="section-title" data-lang="en">Education</h2>
+      </div>
+      <div class="edu-list">
+
+        <div class="edu-item">
+          <div class="edu-year">2025 – 2027</div>
+          <div>
+            <div class="edu-degree" data-lang="fr">Master Économie de la Santé</div>
+            <div class="edu-degree" data-lang="en">Master's in Health Economics</div>
+            <div class="edu-inst" data-lang="fr">Université Le Mans</div>
+            <div class="edu-inst" data-lang="en">Le Mans University</div>
+            <div class="edu-detail" data-lang="fr">
+              <strong>M1 Validé (2025-2026) :</strong> Python · R · SAS · VBA · Visualisation de données · Big Data · Économétrie · Biostatistique &amp; analyse de survie · Économie du risque · Macroéconomie de la santé · Droit des données RGPD · Data mining · Essais cliniques · Méta-analyses en réseau · Modèles épidémiologie · Économie de la santé 1 · Microéconomie de l'assurance · Économie de la protection sociale
+              <br><strong>M2 En Cours (2026-2027) :</strong> Évaluation politiques publiques · Méthodes de Monte Carlo · Évaluation ex ante efficience &amp; impact budgétaire · Économie de la santé 2 · Santé et vieillissement · Financement systèmes santé · Machine learning Python · Économétrie spatiale · Analyse de survie · Big data Python · English for Health Economics · Interface VBA · SQL SAS · Modélisation médico-économique · Microéconomie assurance approfondie · Évaluation ex post stratégies santé · Santé publique
+            </div>
+            <div class="edu-detail" data-lang="en">
+              <strong>M1 Completed (2025-2026):</strong> Python · R · SAS · VBA · Data visualization · Big Data · Econometrics · Biostatistics &amp; survival analysis · Economics of risk · Health macroeconomics · Data law &amp; GDPR · Data mining · Clinical trials · Network meta-analyses · Epidemiological models · Health economics 1 · Insurance microeconomics · Social protection economics
+              <br><strong>M2 Ongoing (2026-2027):</strong> Public policy evaluation · Monte Carlo methods · Ex ante efficiency &amp; budget impact evaluation · Health economics 2 · Ageing and health · Health system financing · Python machine learning · Spatial econometrics · Survival analysis · Big data Python · English for Health Economics · VBA interface · SQL SAS · Health economic modelling · Advanced insurance microeconomics · Ex post health strategy evaluation · Public health
+            </div>
+          </div>
+        </div>
+
+        <div class="edu-item">
+          <div class="edu-year">2022 – 2024</div>
+          <div>
+            <div class="edu-degree" data-lang="fr">Master Économétrie Appliquée</div>
+            <div class="edu-degree" data-lang="en">Master's in Applied Econometrics</div>
+            <div class="edu-inst" data-lang="fr">Université de Nantes</div>
+            <div class="edu-inst" data-lang="en">University of Nantes</div>
+            <div class="edu-detail" data-lang="fr">
+              <strong>M1 (2022-2023) :</strong> Économétrie linéaire avancée · Analyse de données et statistique descriptive · Évaluation des actifs · Économie numérique · Introduction au logiciel R · Introduction au logiciel Python · Évaluation des politiques publiques · Modélisation des variables latentes · Techniques de prévision et conjoncture · Séries temporelles univariées · Gestion de bases de données sous SQL · Dataviz : R Shiny
+              <br><strong>M2 (2023-2024) :</strong> Macroéconométrie : séries temporelles multivariées · Modélisation du risque de crédit et méthodes de scoring · Économétrie des données de panel · Économétrie spatiale et cartographie sous GeoDa · Économétrie des variables qualitatives · SVM et réseaux de neurones · Régressions pénalisées et sélection de variables en Big Data · Arbres de décision · Text mining, NLP et web scraping · Économétrie financière avancée
+            </div>
+            <div class="edu-detail" data-lang="en">
+              <strong>M1 (2022-2023):</strong> Advanced linear econometrics · Data analysis and descriptive statistics · Asset valuation · Digital economics · Introduction to R · Introduction to Python · Public policy evaluation · Latent variable modelling · Forecasting techniques and economic outlook · Univariate time series · Database management with SQL · Data visualization: R Shiny
+              <br><strong>M2 (2023-2024):</strong> Macroeconometrics: multivariate time series · Credit risk modelling and scoring methods · Panel data econometrics · Spatial econometrics and mapping with GeoDa · Qualitative variable econometrics · SVM and neural networks · Penalized regression and variable selection in Big Data · Decision trees · Text mining, NLP and web scraping · Advanced financial econometrics
+            </div>
+          </div>
+        </div>
+
+        <div class="edu-item">
+          <div class="edu-year">2016 – 2019</div>
+          <div>
+            <div class="edu-degree" data-lang="fr">Licence Analyse et Politique Économique</div>
+            <div class="edu-degree" data-lang="en">Bachelor's in Economic Analysis and Policy</div>
+            <div class="edu-inst" data-lang="fr">Université Cheikh Anta Diop de Dakar — Sénégal</div>
+            <div class="edu-inst" data-lang="en">Cheikh Anta Diop University of Dakar — Senegal</div>
+            <div class="edu-detail" data-lang="fr">
+              <strong>Principaux enseignements :</strong> Économétrie · Microéconomie · Macroéconomie · Politique économique · Économie des finances publiques · Économie du développement · Analyse de projets · Chroniques et prévision
+            </div>
+            <div class="edu-detail" data-lang="en">
+              <strong>Key courses:</strong> Econometrics · Microeconomics · Macroeconomics · Economic policy · Public finance economics · Development economics · Project analysis · Time series and forecasting
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="fade-in">
+      <div class="section-header">
+        <h2 class="section-title" data-lang="fr">Expérience</h2>
+        <h2 class="section-title" data-lang="en">Experience</h2>
+      </div>
+      <div class="exp-list">
+
+        <div class="exp-item">
+          <div class="exp-dates" data-lang="fr">Avr – Sept 2024</div>
+          <div class="exp-dates" data-lang="en">Apr – Sep 2024</div>
+          <div>
+            <div class="exp-role" data-lang="fr">Data Analyst / Chargée d'études statistiques — Stage</div>
+            <div class="exp-role" data-lang="en">Data Analyst / Statistical Analyst — Internship</div>
+            <div class="exp-org" data-lang="fr">Direction Générale de France Travail — Paris</div>
+            <div class="exp-org" data-lang="en">France Travail (French Public Employment Service), Head Office — Paris</div>
+            <ul class="exp-bullets" data-lang="fr">
+              <li>Exploitation et fiabilisation de bases de données relatives à l'emploi et aux allocations chômage.</li>
+              <li>Production d'indicateurs et d'un tableau de bord trimestriel sur le montant moyen des droits aux allocations versés aux demandeurs d'emploi indemnisés au 31 décembre 2023.</li>
+              <li>Amélioration d'un modèle économétrique de prévision du taux de retour à l'emploi : sélection de variables, validation croisée, analyse des résultats et rédaction de la synthèse méthodologique.</li>
+              <li>Contribution à la rédaction des notes de résultats et présentation des travaux aux équipes métier.</li>
+            </ul>
+            <ul class="exp-bullets" data-lang="en">
+              <li>Processing and quality assurance of employment and unemployment benefit databases.</li>
+              <li>Production of indicators and a quarterly dashboard on the average benefit entitlements paid to compensated jobseekers as of 31 December 2023.</li>
+              <li>Improvement of an econometric model forecasting the return-to-employment rate: variable selection, cross-validation, results analysis and methodological summary.</li>
+              <li>Contribution to results notes and presentation of the work to business teams.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ENGAGEMENT ASSOCIATIF -->
+    <section class="fade-in">
+      <div class="section-header">
+        <h2 class="section-title" data-lang="fr">Engagement Associatif &amp; Bénévolat</h2>
+        <h2 class="section-title" data-lang="en">Volunteering</h2>
+      </div>
+      <div class="exp-list">
+        <div class="exp-item">
+          <div class="exp-dates" data-lang="fr">Déc 2022 – Janv 2024</div>
+          <div class="exp-dates" data-lang="en">Dec 2022 – Jan 2024</div>
+          <div>
+            <div class="exp-role" data-lang="fr">Chargée de données — Bénévolat</div>
+            <div class="exp-role" data-lang="en">Data Officer — Volunteer</div>
+            <div class="exp-org" data-lang="fr">Association des Étudiants Sénégalais de France — Paris</div>
+            <div class="exp-org" data-lang="en">Association of Senegalese Students in France — Paris</div>
+            <ul class="exp-bullets" data-lang="fr">
+              <li>Construction et actualisation d'une base de données des étudiants sénégalais en France ; analyse statistique de l'évolution des effectifs et production d'indicateurs de suivi.</li>
+              <li>Rédaction d'une synthèse des résultats et accompagnement des nouveaux arrivants dans leurs démarches administratives.</li>
+            </ul>
+            <ul class="exp-bullets" data-lang="en">
+              <li>Built and maintained a database of Senegalese students in France; statistical analysis of enrolment trends and production of monitoring indicators.</li>
+              <li>Wrote a summary of findings and supported newcomers with administrative procedures.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LANGUES -->
+    <section id="langues" class="fade-in">
+      <div class="section-header">
+        <h2 class="section-title" data-lang="fr">Langues &amp; Centres d'Intérêt</h2>
+        <h2 class="section-title" data-lang="en">Languages &amp; Interests</h2>
+      </div>
+      <div class="lang-row">
+        <div class="lang-card">
+          <span class="lang-flag" aria-hidden="true">
+            <svg viewBox="0 0 3 2" width="30" height="20"><rect width="1" height="2" fill="#002654"/><rect x="1" width="1" height="2" fill="#ffffff"/><rect x="2" width="1" height="2" fill="#CE1126"/></svg>
+          </span>
+          <div>
+            <div class="lang-name" data-lang="fr">Français</div>
+            <div class="lang-name" data-lang="en">French</div>
+            <div class="lang-level-text" data-lang="fr">Courant</div>
+            <div class="lang-level-text" data-lang="en">Fluent</div>
+          </div>
+        </div>
+        <div class="lang-card">
+          <span class="lang-flag" aria-hidden="true">
+            <svg viewBox="0 0 60 30" width="40" height="20">
+              <clipPath id="uk-s"><path d="M0,0 v30 h60 v-30 z"/></clipPath>
+              <clipPath id="uk-t"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath>
+              <g clip-path="url(#uk-s)">
+                <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
+                <path d="M0,0 L60,30 M60,0 L0,30" stroke="#ffffff" stroke-width="6"/>
+                <path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#uk-t)" stroke="#C8102E" stroke-width="4"/>
+                <path d="M30,0 v30 M0,15 h60" stroke="#ffffff" stroke-width="10"/>
+                <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/>
+              </g>
+            </svg>
+          </span>
+          <div>
+            <div class="lang-name" data-lang="fr">Anglais</div>
+            <div class="lang-name" data-lang="en">English</div>
+            <div class="lang-level-text" data-lang="fr">Intermédiaire (B2)</div>
+            <div class="lang-level-text" data-lang="en">Intermediate (B2)</div>
+          </div>
+        </div>
+        <div class="lang-card">
+          <span class="lang-flag">🥾</span>
+          <div>
+            <div class="lang-name" data-lang="fr">Centres d'intérêt</div>
+            <div class="lang-name" data-lang="en">Interests</div>
+            <div class="lang-level-text" data-lang="fr">Randonnée · Scrabble</div>
+            <div class="lang-level-text" data-lang="en">Hiking · Scrabble</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="fade-in">
+      <div class="section-header">
+        <h2 class="section-title" data-lang="fr">Contact &amp; Opportunités</h2>
+        <h2 class="section-title" data-lang="en">Contact &amp; Opportunities</h2>
+      </div>
+      <p class="contact-intro" data-lang="fr">
+        Disponible pour un stage alterné dès maintenant ou un stage de fin d'études à temps plein d'avril à septembre 2027. Ouverte à la signature d'un contrat CDD ou CDI à l'issue du stage. Mobilité sur toute la France.
+      </p>
+      <p class="contact-intro" data-lang="en">
+        Available for an alternating internship starting now, or a full-time final internship from April to September 2027. Open to a fixed-term or permanent contract following the internship. Mobile across France.
+      </p>
+      <div class="contact-grid">
+        <a href="mailto:rosebakhoum96@gmail.com" class="contact-item">
+          <div class="contact-icon">✉</div>
+          <div>
+            <div class="contact-label">Email</div>
+            <div class="contact-value">rosebakhoum96@gmail.com</div>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/rose-bakhoum/" target="_blank" rel="noopener" class="contact-item">
+          <div class="contact-icon">in</div>
+          <div>
+            <div class="contact-label">LinkedIn</div>
+            <div class="contact-value">Rose Bakhoum</div>
+          </div>
+        </a>
+        <a href="https://github.com/Ndeye-Rose" target="_blank" rel="noopener" class="contact-item">
+          <div class="contact-icon">⌥</div>
+          <div>
+            <div class="contact-label">GitHub</div>
+            <div class="contact-value">Ndeye-Rose</div>
+          </div>
+        </a>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-label" data-lang="fr">Localisation</div>
+            <div class="contact-label" data-lang="en">Location</div>
+            <div class="contact-value" data-lang="fr">Le Mans (72) — Mobilité France entière</div>
+            <div class="contact-value" data-lang="en">Le Mans, France — Mobile across France</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <p data-lang="fr">Ndéye Rose Bakhoum — Data Analyst &amp; Économiste de la Santé — 2026</p>
+    <p data-lang="en">Ndéye Rose Bakhoum — Data Analyst &amp; Health Economist — 2026</p>
+    <p class="footer-phones">
+      <span data-lang="fr">Tél. :</span><span data-lang="en">Phone:</span>
+      <a href="tel:+33752295319">+33 7 52 29 53 19</a>
+    </p>
+  </footer>
+
+  <script>
+    // Language toggle
+    function setLanguage(lang) {
+      document.documentElement.lang = lang;
+      try { localStorage.setItem('preferredLanguage', lang); } catch (e) {}
+      document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      let saved = 'fr';
+      try { saved = localStorage.getItem('preferredLanguage') || 'fr'; } catch (e) {}
+      setLanguage(saved);
+    });
+
+    // Highlight the menu link of the section currently on screen
+    (function () {
+      const links = document.querySelectorAll('.nav-links a');
+      const targets = Array.from(links)
+        .map(a => document.querySelector(a.getAttribute('href')))
+        .filter(Boolean);
+      if (!('IntersectionObserver' in window) || !targets.length) return;
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          links.forEach(a => {
+            const on = a.getAttribute('href') === '#' + entry.target.id;
+            a.classList.toggle('active', on);
+            if (on && window.innerWidth <= 700) {
+              a.scrollIntoView({ block: 'nearest', inline: 'center' });
+            }
+          });
+        });
+      }, { rootMargin: '-40% 0px -55% 0px' });
+      targets.forEach(t => observer.observe(t));
+    })();
+
+    // Project filter (keeps FR and EN buttons in sync)
+    function filterProjects(category) {
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.filter === category);
+      });
+      document.querySelectorAll('.project-card').forEach(card => {
+        card.style.display = (category === 'all' || card.dataset.category === category) ? 'block' : 'none';
+      });
+    }
+  </script>
+
+</body>
+</html>
